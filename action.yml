@@ -1,0 +1,11 @@
+name: 'Bump Version'
+description: 'A GitHub Action to easily bump version files'
+author: 'Tommaso De Rossi'
+inputs: 
+  version_file:
+    description: 'Version file to bump path'
+    default: 'VERSION'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+
