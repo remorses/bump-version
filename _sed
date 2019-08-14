@@ -1,0 +1,15 @@
+#!/bin/sh
+set -e
+echo 'running sed to replace "[bump]"'
+REPO_PATH=`git rev-parse --show-toplevel`
+
+for FILE in `find $REPO_PATH -type f`; do
+    LINE_NUMBERS=`sed -n -E "/.*\[bump\].*/=" $FILE`
+    if [ -n "$LINE_NUMBERS" ]; then
+        for LINE_NUMBER in $LINE_NUMBERS; do
+            echo "found a line to replace content: $LINE_NUMBER in $FILE"
+            let 'LINE_NUMBER++' || echo "let failed"
+            sed -i -E "${LINE_NUMBER}s/(.*)([0-9]+\.[0-9]+\.[0-9]+)(.*)/\1${VERSION}\3/g" $FILE || echo "fail"
+        done
+    fi
+done
