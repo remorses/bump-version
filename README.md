@@ -3,7 +3,7 @@ Bump the version number in the provided `version_file`.
 Bumps version numbers found after lines containing `[bump]`.
 
 
-## Usage:
+## Usage:
 ```yaml
 - name: Bump version
   uses: remorses/bump-version
