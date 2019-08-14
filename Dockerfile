@@ -1,5 +1,10 @@
 FROM treeder/bump:1.2.8
 
+LABEL "com.github.actions.name"="Bump Version"
+LABEL "com.github.actions.description"="A GitHub Action to easily bump version files"
+LABEL "com.github.actions.icon"="chevrons-up"
+LABEL "com.github.actions.color"="red"
+
 COPY LICENSE README.md /
 
 RUN apk  add --no-cache git sed
