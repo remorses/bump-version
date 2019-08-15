@@ -1,8 +1,9 @@
 name: 'Bump Versions'
 description: 'A GitHub Action to easily bump version files'
 author: 'Tommaso De Rossi'
-icon: 'chevrons-up'
-color: 'red'
+branding:
+  icon: 'chevrons-up'
+  color: 'red'
 inputs: 
   version_file:
     description: 'Version file to bump path'
