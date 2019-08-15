@@ -16,8 +16,8 @@ echo starting
 # [ -f $GITHUB_VERSION_FILE ] || (echo "file containing current version is needed, default is ./VERSION, customizable with GITHUB_VERSION_FILE env var" && exit 1)
 # [ -z "$REPOSITORY" ] && (echo "env var REPOSITORY is needed when executing outside of circleci, (for exampe REPOSITORY=user/repo)" && exit 1)
 
-git config  user.email "bump@version.com"
-git config  user.name "bump-version"
+git config user.email "bump@version.com"
+git config user.name "bump-version"
 
 # git checkout master
 git pull --commit --no-edit https://${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git # master
@@ -37,4 +37,4 @@ export VERSION=`cat $GITHUB_VERSION_FILE`
 git add -A 
 git commit -m "${GITHUB_PREFIX} ${VERSION}"  -m "[skip ci]"
 [ -n "$GITHUB_PREFIX" ] && (git tag -a "${GITHUB_PREFIX}_${VERSION}" -m "[skip ci]") || (git tag -a "${VERSION}" -m "[skip ci]")
-git push  --tags  https://${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git HEAD
+git push  --tags  "https://{GITHUB_TOKEN}:x-oauth-basic@github.com/${GITHUB_REPOSITORY}.git" HEAD
