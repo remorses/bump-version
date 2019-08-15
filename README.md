@@ -6,7 +6,7 @@ Bumps version numbers found after lines containing `[bump]`.
 ## Usage:
 ```yaml
 - name: Bump version
-  uses: remorses/bump-version
+  uses: remorses/bump-version@master
   with:
     version_file: ./VERSION
 ```
