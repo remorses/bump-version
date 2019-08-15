@@ -37,4 +37,4 @@ export VERSION=`cat $GITHUB_VERSION_FILE`
 git add -A 
 git commit -m "${GITHUB_PREFIX} ${VERSION}"  -m "[skip ci]"
 [ -n "$GITHUB_PREFIX" ] && (git tag -a "${GITHUB_PREFIX}_${VERSION}" -m "[skip ci]") || (git tag -a "${VERSION}" -m "[skip ci]")
-git push  --tags  "https://{GITHUB_TOKEN}:x-oauth-basic@github.com/${GITHUB_REPOSITORY}.git" HEAD
+git push  --tags  "https://${GITHUB_TOKEN}:x-oauth-basic@github.com/${GITHUB_REPOSITORY}.git" HEAD
