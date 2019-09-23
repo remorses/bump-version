@@ -22,7 +22,7 @@ async function run() {
     const tagMsg = `${capitalize(prefix) + ' '}Version ${newVersion}`
     await commit({
         USER_EMAIL: 'bump@version.com',
-        USER_NAME: 'version-bumper',
+        USER_NAME: 'bump-version',
         GITHUB_TOKEN: process.env.GITHUB_TOKEN as string,
         MESSAGE: tagMsg,
     })
