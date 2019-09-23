@@ -9,7 +9,8 @@ export const replacePattern = async (
 ) => {
     const files = await globby('**', {
         gitignore: true,
-        expandDirectories: true
+        expandDirectories: true,
+        onlyFiles: true,
     })
     files.forEach((name) => {
         let found = false
