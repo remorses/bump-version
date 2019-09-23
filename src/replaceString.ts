@@ -16,8 +16,8 @@ const read = async (pattern: RegExp, replacer: RegExp, value: string) => {
             //     last = last.replace(replacer, value)
             // }
             return [...acc, last]
-        }, ['']).join('\n')
-        fs.writeFileSync(name, 'utf8', result)
+        }, ['']).slice(1).join('\n')
+        fs.writeFileSync(name, result, 'utf8')
     })
     // 
 }
