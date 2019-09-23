@@ -3,6 +3,8 @@ import * as fs from 'fs'
 import * as github from '@actions/github'
 import {createTag, } from './createTag'
 import {capitalize, bump, replacePattern} from './support'
+import commit from './commit'
+
 
 const versionRegex = /[0-9]+\.[0-9]+\.[0-9]+/
 
@@ -17,10 +19,18 @@ async function run() {
     } else {
         await replacePattern(/.*\[bump\].*/, versionRegex, newVersion)
     }
-    await createTag({
-        tagName: prefix ? prefix + newVersion : newVersion,
-        tagMsg: `${capitalize(prefix)} Version ${newVersion}`
+    const tagMsg = `${capitalize(prefix) + ' '}Version ${newVersion}`
+    await commit({
+        USER_EMAIL: 'bump@version.com',
+        USER_NAME: 'version-bumper',
+        GITHUB_TOKEN: process.env.GITHUB_TOKEN as string,
+        MESSAGE: tagMsg,
     })
+    await createTag({
+        tagName: prefix ? prefix + '_' + newVersion : newVersion,
+        tagMsg,
+    })
+
 }
 
 run()
