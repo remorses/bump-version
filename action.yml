@@ -15,3 +15,5 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
 
+# [bump]
+# 0.0.0
