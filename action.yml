@@ -8,6 +8,9 @@ inputs:
   version_file:
     description: 'Version file to bump path'
     default: 'VERSION'
+  prefix:
+    description: 'how to prefix the tag'
+    default: null
 runs:
   using: 'docker'
   image: 'Dockerfile'
