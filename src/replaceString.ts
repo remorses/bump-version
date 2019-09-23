@@ -11,10 +11,10 @@ const read = async (pattern: RegExp, replacer: RegExp, value: string) => {
     files.map(name => {
         const lines = fs.readFileSync(name, 'utf8').toString().split('\n')
         const result = lines.reduce((acc, last) => {
-            // if (acc[acc.length - 1].search(pattern)) {
-            //     console.log('replacing')
-            //     last = last.replace(replacer, value)
-            // }
+            if (acc[acc.length - 1].search(pattern)) {
+                console.log('replacing')
+                last = last.replace(replacer, value)
+            }
             return [...acc, last]
         }, ['']).slice(1).join('\n')
         fs.writeFileSync(name, result, 'utf8')
