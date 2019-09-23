@@ -10,8 +10,6 @@ yarn-error.log*
 lerna-debug.log*
 play*
 
-node_modules
-
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
