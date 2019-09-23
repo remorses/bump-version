@@ -8,7 +8,7 @@ const versionRegex = /[0-9]+\.[0-9]+\.[0-9]+/
 
 async function run() {
     const versionPath = core.getInput('version_file',)
-    const prefix = core.getInput('prefix',)
+    const prefix = core.getInput('prefix',).trim()
     const version = fs.readFileSync(versionPath, 'utf8').toString().trim()
     const newVersion = bump(version)
     if (prefix) {

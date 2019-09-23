@@ -10,7 +10,7 @@ inputs:
     default: 'VERSION'
   prefix:
     description: 'how to prefix the tag'
-    default: null
+    default: ''
 runs:
   using: 'node12'
   main: 'lib/main.js'
