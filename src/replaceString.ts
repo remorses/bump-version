@@ -22,6 +22,6 @@ const read = async (pattern: RegExp, replacer: RegExp, value: string) => {
     // 
 }
 
-read(/.*\[bump\].*/, /(.*)([0-9]+\.[0-9]+\.[0-9]+)(.*)/, '0.1.2')
+read(/.*\[bump\].*/, /[0-9]+\.[0-9]+\.[0-9]+/, '0.1.2')
 
 export default read
