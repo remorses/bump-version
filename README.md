@@ -21,7 +21,7 @@ if using prefix you can bump versions adding the pattern `[bump if {prefix}]` ab
 from setuptools import setup, find_packages
 setup(
   name='foo',
-  # [bump if prefix]
+  # [bump if dir2]
   version='1.0.0',
   ...
 ```
