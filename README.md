@@ -25,7 +25,6 @@ setup(
   version='1.0.0',
   ...
 ```
-If you are versioning only one package just use the `[bump] pattern.`
 ```yaml
 - name: Bump version
   uses: remorses/bump-version@js
