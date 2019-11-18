@@ -20,7 +20,7 @@ async function run() {
         const pattern = new RegExp('\\[bump if ' + prefix + '\\]')
         await replacePattern(pattern, versionRegex, newVersion)
     } else {
-        await replacePattern(/.*\[bump\].*/, versionRegex, newVersion)
+        await replacePattern(/\[bump\]/, versionRegex, newVersion)
     }
     const tagMsg = `${capitalize(prefix) + ' '}Version ${newVersion}`
     await Promise.all([
