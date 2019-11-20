@@ -35,6 +35,7 @@ async function run() {
             tagMsg
         })
     ])
+    core.info('setting output version=' + version + ' prefix=' + prefix)
     core.setOutput('version', newVersion)
     core.setOutput('prefix', prefix)
 }
