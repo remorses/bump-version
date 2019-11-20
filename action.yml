@@ -8,7 +8,14 @@ inputs:
   version_file:
     description: 'Version file to bump path'
     default: 'VERSION'
+outputs:
+  version:
+    description: New version
+  prefix:
+    description: Prefix if set
 runs:
   using: 'docker'
   image: 'Dockerfile'
 
+
+  
