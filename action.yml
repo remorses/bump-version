@@ -21,4 +21,4 @@ runs:
   main: 'lib/main.js'
 
 # [bump]
-# 2.0.3
+# 2.0.6
