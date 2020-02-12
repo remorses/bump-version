@@ -4,7 +4,11 @@
   "version": "2.0.7",
   "description": "JavaScript template action",
   "main": "lib/main.js",
-  "bin": "lib/bin.js",
+  "files": [
+      "lib",
+      "bin.js"
+  ],
+  "bin": "./bin.js",
   "scripts": {
     "build": "tsc",
     "test": "jest"

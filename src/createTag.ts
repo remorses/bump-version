@@ -1,7 +1,5 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
-import * as fs from 'fs'
-import * as path from 'path'
 
 export async function createTag({ tagName, tagMsg = '' }) {
     if (!process.env.GITHUB_WORKSPACE || !process.env.GITHUB_REPOSITORY) {

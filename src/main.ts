@@ -1,9 +1,8 @@
 import * as core from '@actions/core'
 import * as fs from 'fs'
-import * as github from '@actions/github'
-import { createTag } from './createTag'
-import { capitalize, bump, replacePattern } from './support'
 import commit from './commit'
+import { createTag } from './createTag'
+import { bump, capitalize, replacePattern } from './support'
 
 const versionRegex = /[0-9]+\.[0-9]+\.[0-9]+/
 
