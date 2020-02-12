@@ -1,9 +1,10 @@
 {
-  "name": "javascript-template-action",
-  "version": "0.0.0",
-  "private": true,
+  "name": "bumpversions",
+  "_": "[bump]",
+  "version": "1.0.10",
   "description": "JavaScript template action",
   "main": "lib/main.js",
+  "bin": "lib/bin.js",
   "scripts": {
     "build": "tsc",
     "test": "jest"

@@ -1,17 +1,50 @@
-const { exec } = require('@actions/exec')
-const core = require('@actions/core')
+import { exec }from '@actions/exec'
+import * as core from '@actions/core'
+import { ExecOptions } from '@actions/exec/lib/interfaces'
 
-export default async ({ USER_NAME, USER_EMAIL, MESSAGE, GITHUB_TOKEN }) => {
+export default async ({ USER_NAME, USER_EMAIL, MESSAGE, GITHUB_TOKEN, tagName, tagMsg }) => {
     try {
+        if (!process.env.GITHUB_WORKSPACE || !process.env.GITHUB_REPOSITORY) {
+            console.log('using the local execution')
+            const options: ExecOptions = {
+                cwd: '.',
+                errStream: process.stderr,
+                outStream: process.stdout
+            }
+            await exec('git', ['add', '-A'], options)
+            try {
+                await exec('git', ['commit', '-m', `${MESSAGE}`], options)
+            } catch (err) {
+                console.log('nothing to commit, working tree clean')
+                return
+            }
+            try {
+                await exec('git', ['tag', tagName, '-m', tagMsg], options)
+                await exec('git', ['push', 'origin', 'master'], options)
+                await exec('git', ['push', 'origin', '--tags'], options)
+            } catch(e) {
+                console.log('got error while tagging and pushing: ' + e)
+                return
+            }
+            return
+        }
+
+        if (!process.env.GITHUB_TOKEN) {
+            console.log('missing required env vars, skipping commit creation')
+            core.setFailed('missing required env vars')
+            return
+        }
+        console.log(`committing changes with message "${MESSAGE}"`)
         const REMOTE_REPO = `https://${process.env.GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`
 
         const options = {
             cwd: process.env.GITHUB_WORKSPACE,
             listeners: {
                 stdline: core.debug,
-                debug: core.debug
-            }
-        }
+                stderr: core.error,
+                debug: core.debug ,
+            },
+        } as any
 
         await exec('git', ['config', 'user.name', `"${USER_NAME}"`], options)
         await exec('git', ['config', 'user.email', `"${USER_EMAIL}"`], options)

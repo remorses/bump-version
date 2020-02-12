@@ -25,3 +25,11 @@ You can give prefixes to tags
   env:
     GITHUB_TOKEN: {{ secrets.GITHUB_TOKEN }}
 ```
+
+
+## Usage locally
+The commit won't be executed
+```
+npm i -g bumpversions
+INPUT_VERSION_FILE=versionpath bumpversions
+```

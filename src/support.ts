@@ -11,7 +11,9 @@ export const replacePattern = async (
         gitignore: true,
         expandDirectories: true,
         onlyFiles: true,
+        ignore: ['node_modules',]
     })
+    console.log('scanned files')
     files.forEach((name) => {
         let found = false
         const lines = fs
