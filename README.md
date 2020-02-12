@@ -28,7 +28,6 @@ You can give prefixes to tags
 
 
 ## Usage locally
-The commit won't be executed
 ```
 npm i -g bumpversions
 INPUT_VERSION_FILE=versionpath bumpversions

@@ -21,7 +21,7 @@ export default async ({ USER_NAME, USER_EMAIL, MESSAGE, GITHUB_TOKEN, tagName, t
             }
             try {
                 await exec('git', ['tag', tagName, '-m', tagMsg], options)
-                await exec('git', ['push', 'origin', 'HEAD'], options)
+                // await exec('git', ['push', 'origin', 'HEAD'], options)
                 await exec('git', ['push', 'origin', '--tags'], options)
             } catch(e) {
                 console.log('got error while tagging and pushing: ' + e)
@@ -63,10 +63,10 @@ export default async ({ USER_NAME, USER_EMAIL, MESSAGE, GITHUB_TOKEN, tagName, t
             return
         }
 
-        await exec('git', ['branch', 'tmp'], options)
-        await exec('git', ['checkout', 'master'], options)
-        await exec('git', ['merge', 'tmp'], options)
-        await exec('git', ['push', 'publisher', 'master'], options)
+        // await exec('git', ['branch', 'tmp'], options)
+        // await exec('git', ['checkout', 'master'], options)
+        // await exec('git', ['merge', 'tmp'], options)
+        await exec('git', ['push', 'publisher', 'HEAD'], options)
     } catch (err) {
         core.setFailed(err.message)
         console.log(err)

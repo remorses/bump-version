@@ -27,7 +27,7 @@ async function run() {
         await replacePattern(/\[bump\]/, versionRegex, newVersion)
     }
     const tagName = prefix ? prefix + '_' + newVersion : newVersion
-    const tagMsg = `${capitalize(prefix) + ' '}Version ${newVersion}`
+    const tagMsg = `${capitalize(prefix) + ' '}Version ${newVersion} [skip ci]`
     await Promise.all([
         commit({
             USER_EMAIL: 'bump@version.com',
