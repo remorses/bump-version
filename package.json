@@ -1,7 +1,7 @@
 {
   "name": "bumpversions",
   "_": "[bump]",
-  "version": "1.0.15",
+  "version": "2.0.1",
   "description": "JavaScript template action",
   "main": "lib/main.js",
   "bin": "lib/bin.js",
