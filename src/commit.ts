@@ -20,7 +20,7 @@ export default async ({ USER_NAME, USER_EMAIL, MESSAGE, GITHUB_TOKEN, tagName, t
             }
             try {
                 await exec('git', ['tag', tagName, '-m', tagMsg], options)
-                await exec('git', ['push', 'origin',], options)
+                await exec('git', ['push', 'origin', 'HEAD'], options)
                 await exec('git', ['push', 'origin', '--tags'], options)
             } catch(e) {
                 console.log('got error while tagging and pushing: ' + e)
