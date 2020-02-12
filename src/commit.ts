@@ -62,11 +62,11 @@ export default async ({ USER_NAME, USER_EMAIL, MESSAGE, GITHUB_TOKEN, tagName, t
             core.debug('nothing to commit, working tree clean')
             return
         }
-
+        const branch = process.env.BRANCH || 'master'
         await exec('git', ['branch', 'tmp'], options)
-        await exec('git', ['checkout', process.env.BRANCH as any], options)
+        await exec('git', ['checkout', branch], options)
         await exec('git', ['merge', 'tmp'], options)
-        await exec('git', ['push', 'publisher', process.env.BRANCH as any], options)
+        await exec('git', ['push', 'publisher', branch], options)
     } catch (err) {
         core.setFailed(err.message)
         console.log(err)
