@@ -66,7 +66,7 @@ export default async ({ USER_NAME, USER_EMAIL, MESSAGE, GITHUB_TOKEN, tagName, t
         // await exec('git', ['branch', 'tmp'], options)
         // await exec('git', ['checkout', 'master'], options)
         // await exec('git', ['merge', 'tmp'], options)
-        await exec('git', ['push', 'publisher', 'HEAD'], options)
+        await exec('git', ['push', 'publisher', process.env.GITHUB_REF as any], options)
     } catch (err) {
         core.setFailed(err.message)
         console.log(err)
