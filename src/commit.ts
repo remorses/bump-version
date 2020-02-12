@@ -11,7 +11,7 @@ export default async ({ USER_NAME, USER_EMAIL, MESSAGE, GITHUB_TOKEN, tagName, t
                 errStream: process.stderr,
                 outStream: process.stdout
             }
-            await exec('git', ['add', '-A'], options)
+            await exec('git', ['add', '.'], options)
             try {
                 await exec('git', ['commit', '-m', `${MESSAGE}`], options)
             } catch (err) {
