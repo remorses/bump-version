@@ -28,7 +28,10 @@ You can give prefixes to tags
 
 
 ## Usage locally
+it won't push, do it manually locally
 ```
 npm i -g bumpversions
 INPUT_VERSION_FILE=versionpath bumpversions
+git push
+git push --tags
 ```
