@@ -1,6 +1,7 @@
 # Bump version
 
-Bump the version number in the provided `version_file`.
+Bump the patch version number in the provided `version_file`.
+
 Bumps version numbers found after lines containing `[bump]`.
 **Please use the `js` branch that is faster and better.**
 
