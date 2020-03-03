@@ -12,7 +12,7 @@ Bumps version numbers found after lines containing `[bump]`.
   with:
       version_file: ./VERSION
   env:
-      GITHUB_TOKEN: { { secrets.GITHUB_TOKEN } }
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ## Usage in a monorepo:
