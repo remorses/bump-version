@@ -42,7 +42,7 @@ export default async ({ USER_NAME, USER_EMAIL, MESSAGE, GITHUB_TOKEN, tagName, t
             cwd: process.env.GITHUB_WORKSPACE,
             listeners: {
                 stdline: core.debug,
-                stderr: core.error,
+                stderr: core.debug,
                 debug: core.debug ,
             },
         } as any
