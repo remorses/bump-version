@@ -19,6 +19,7 @@ inputs:
   branch:
     description: 'The branch to bump version in'
     required: false
+    default: master
 outputs:
   version:
     description: New version
