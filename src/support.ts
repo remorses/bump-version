@@ -14,7 +14,6 @@ export const replacePattern = async (
     value: string,
 ) => {
     const files = await globby('**', {
-        // TODO should be at top of github repo
         gitignore: true,
         expandDirectories: true,
         onlyFiles: true,
