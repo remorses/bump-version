@@ -26,7 +26,7 @@ export async function createAnnotations({
         )
         const { data } = await octokit.checks.create({
             ...github.context.repo,
-            name: 'bump-version', // github.context.action,
+            name: github.context.action,
             head_sha: getSha(github.context),
             output: {
                 title: `Bumped version to ${newVersion}`,
@@ -38,7 +38,8 @@ export async function createAnnotations({
         })
         console.log(data)
     } catch (error) {
-        core.error(`Context: ${JSON.stringify(github.context, null, 2)}`)
+        console.log(error)
+        core.error(`Context: ${JSON.stringify(error, null, 2)}`)
         return
     }
 }
