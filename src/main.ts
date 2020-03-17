@@ -2,12 +2,15 @@ import * as core from '@actions/core'
 import * as fs from 'fs'
 import commit from './commit'
 import { createTag } from './createTag'
-import { bump, capitalize, replacePattern } from './support'
+import { bump, capitalize, replacePattern, LineReplaced } from './support'
+import { createAnnotations } from './createAnnotation'
 
 const versionRegex = /[0-9]+\.[0-9]+\.[0-9]+/
 
 async function run() {
     console.log('running')
+    const githubToken =
+        process.env.GITHUB_TOKEN || core.getInput('github_token')
     const versionPath = core.getInput('version_file') || 'VERSION'
     const prefix = (core.getInput('prefix') || '').trim()
     const version = fs
@@ -17,13 +20,16 @@ async function run() {
     const newVersion = bump(version)
     console.log('wrinting new version file')
     fs.writeFileSync(versionPath, newVersion, 'utf8')
+    let linesReplaced: LineReplaced[] = []
     if (prefix) {
         console.log(`replacing version patterns below [bump if ${prefix}]`)
         const pattern = new RegExp('\\[bump if ' + prefix + '\\]')
-        await replacePattern(pattern, versionRegex, newVersion)
+        const res = await replacePattern(pattern, versionRegex, newVersion)
+        linesReplaced = res.linesReplaced
     } else {
         console.log(`replacing version patterns below [bump]`)
-        await replacePattern(/\[bump\]/, versionRegex, newVersion)
+        const res = await replacePattern(/\[bump\]/, versionRegex, newVersion)
+        linesReplaced = res.linesReplaced
     }
     const tagName = prefix ? prefix + '_' + newVersion : newVersion
     const tagMsg = `${capitalize(prefix) + ' '}Version ${newVersion} [skip ci]`
@@ -31,7 +37,7 @@ async function run() {
         commit({
             USER_EMAIL: 'bump@version.com',
             USER_NAME: 'bump-version',
-            GITHUB_TOKEN: process.env.GITHUB_TOKEN as string,
+            GITHUB_TOKEN: githubToken,
             MESSAGE: tagMsg,
             tagName,
             tagMsg,
@@ -42,6 +48,7 @@ async function run() {
         }),
     ])
     console.log('setting output version=' + newVersion + ' prefix=' + prefix)
+    await createAnnotations({ githubToken, newVersion: tagMsg, linesReplaced })
     core.setOutput('version', newVersion)
     core.setOutput('prefix', prefix)
 }

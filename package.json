@@ -5,8 +5,8 @@
   "description": "JavaScript template action",
   "main": "lib/main.js",
   "files": [
-      "lib",
-      "bin.js"
+    "lib",
+    "bin.js"
   ],
   "bin": "./bin.js",
   "scripts": {
@@ -31,12 +31,9 @@
     "globby": "^10.0.1"
   },
   "devDependencies": {
-    "@types/lodash.groupby": "^4.6.6",
     "@types/jest": "^24.0.13",
+    "@types/lodash.groupby": "^4.6.6",
     "@types/node": "^12.0.4",
-    "jest": "^24.8.0",
-    "jest-circus": "^24.7.1",
-    "ts-jest": "^24.0.2",
     "typescript": "^3.5.1"
   }
 }
