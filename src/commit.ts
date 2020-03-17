@@ -2,7 +2,7 @@ import { exec }from '@actions/exec'
 import * as core from '@actions/core'
 import { ExecOptions } from '@actions/exec/lib/interfaces'
 
-export default async ({ USER_NAME, USER_EMAIL, MESSAGE, GITHUB_TOKEN, tagName, tagMsg }) => {
+export default async ({ USER_NAME, USER_EMAIL, MESSAGE, GITHUB_TOKEN, tagName, tagMsg, branch }) => {
     try {
         if (!process.env.GITHUB_WORKSPACE || !process.env.GITHUB_REPOSITORY) {
             console.log('using the local execution')
@@ -62,7 +62,6 @@ export default async ({ USER_NAME, USER_EMAIL, MESSAGE, GITHUB_TOKEN, tagName, t
             core.debug('nothing to commit, working tree clean')
             return
         }
-        const branch = process.env.BRANCH || 'master'
         await exec('git', ['branch', 'tmp'], options)
         await exec('git', ['checkout', branch], options)
         await exec('git', ['merge', 'tmp'], options)

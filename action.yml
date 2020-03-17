@@ -8,9 +8,17 @@ inputs:
   version_file:
     description: 'Version file to bump path'
     default: 'VERSION'
+    required: false
   prefix:
     description: 'how to prefix the tag'
     default: ''
+    required: false
+  github_token:
+    description: 'the github token to push changes'
+    required: false
+  branch:
+    description: 'The branch to bump version in'
+    required: false
 outputs:
   version:
     description: New version

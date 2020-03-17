@@ -10,7 +10,8 @@ const versionRegex = /[0-9]+\.[0-9]+\.[0-9]+/
 async function run() {
     console.log('running')
     const githubToken =
-        process.env.GITHUB_TOKEN || core.getInput('github_token')
+        core.getInput('github_token') || process.env.GITHUB_TOKEN
+    const branch = core.getInput('branch') || process.env.BRANCH
     const versionPath = core.getInput('version_file') || 'VERSION'
     const prefix = (core.getInput('prefix') || '').trim()
     const version = fs
@@ -41,6 +42,7 @@ async function run() {
             MESSAGE: tagMsg,
             tagName,
             tagMsg,
+            branch,
         }),
         createTag({
             tagName,
