@@ -28,6 +28,7 @@ export async function createAnnotations({
             ...github.context.repo,
             name: github.context.action,
             head_sha: getSha(github.context),
+            conclusion: 'success',
             output: {
                 title: `Bumped version to ${newVersion}`,
                 summary: `Bumped version to ${newVersion}`,
