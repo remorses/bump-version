@@ -37,7 +37,7 @@ export async function createAnnotations({
             status: 'completed',
             // started_at: now,
         })
-        console.log(data)
+        // console.log(data)
     } catch (error) {
         console.log(error)
         // core.error(`${JSON.stringify(error, null, 2)}`)
@@ -52,3 +52,5 @@ const getSha = (context) => {
         return context.sha
     }
 }
+
+
