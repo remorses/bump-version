@@ -27,7 +27,7 @@ export async function createTag({ tagName, tagMsg = '' }) {
 
     for (let tag of tags.data) {
         if (tag.name.trim().toLowerCase() === tagName.trim().toLowerCase()) {
-            core.warning(`"${tag.name.trim()}" tag already exists.`)
+            core.debug(`"${tag.name.trim()}" tag already exists.`)
             return
         }
     }
@@ -48,7 +48,7 @@ export async function createTag({ tagName, tagMsg = '' }) {
         sha: newTag.data.sha,
     })
 
-    core.warning(
+    core.debug(
         `Reference ${newReference.data.ref} available at ${newReference.data.url}`
     )
     return { url: newReference.data.url }
