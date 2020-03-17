@@ -1,9 +1,11 @@
 # Bump version
 
-Bump the patch version number in the provided `version_file`.
+This actions does 3 things:
+- Bumps the version number in the provided `version_file`.
+- Creates a tag for the new version (prefixed with the `prefix` input if provided).
+- Bumps all the versions under lines with the pattern `[bump]` (or `[bump if prefix]` if a prefix is provided).
 
-Bumps version numbers found after lines containing `[bump]`.
-**Please use the `js` branch that is faster and better.**
+**Please use the `js` branch as it is the one up to date.**
 
 ## Usage:
 
@@ -12,8 +14,8 @@ Bumps version numbers found after lines containing `[bump]`.
   uses: remorses/bump-version@js
   with:
       version_file: ./VERSION
-  env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      github_token: ${{ secrets.GITHUB_TOKEN }}
+      branch: master
 ```
 
 ## Usage in a monorepo:
@@ -26,34 +28,13 @@ Useful if you have many versions to bump.
   uses: remorses/bump-version@js
   with:
       version_file: ./dir2/VERSION
-      prefix: dir2
-  env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      prefix: dir2 # this will prefix the created tag
+      github_token: ${{ secrets.GITHUB_TOKEN }}
 # will create the tag {prefix}_{version}
 ```
 
-## Usage with custom branch:
+## Created annotations
 
-You can give prefixes to tags
+![](https://raw.githubusercontent.com/remorses/bump-version/js/.github/1.png)
 
-```yaml
-- name: Bump version
-  uses: remorses/bump-version@js
-  with:
-      version_file: ./dir2/VERSION
-      prefix: dir2
-  env:
-      BRANCH: custom_branchname
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-```
-
-## Usage locally
-
-if used as npm bin it won't push, do it manually locally
-
-```
-npm i -g bumpversions
-INPUT_VERSION_FILE=versionpath bumpversions
-git push
-git push --tags
-```
+![](https://raw.githubusercontent.com/remorses/bump-version/js/.github/2.png)
