@@ -22,6 +22,6 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   BRANCH: js
-            - run: npm publish
-              env:
-                  NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
+            # - run: npm publish
+            #   env:
+            #       NODE_AUTH_TOKEN: ${{ secrets.npm_token }}

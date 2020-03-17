@@ -39,7 +39,7 @@ export async function createAnnotations({
         console.log(data)
     } catch (error) {
         console.log(error)
-        core.error(`Context: ${JSON.stringify(error, null, 2)}`)
+        // core.error(`${JSON.stringify(error, null, 2)}`)
         return
     }
 }
