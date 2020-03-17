@@ -16,8 +16,8 @@ export async function createAnnotations({
             (x) => {
                 return {
                     annotation_level: 'notice',
-                    title: `Replaced with ${x.newValue}`,
-                    message: `Replaced with ${x.newValue}`,
+                    title: `Bumped version to ${x.newValue}`,
+                    message: `Bumped version to ${x.newValue}`,
                     path: x.path.replace('./', ''),
                     start_line: x.line,
                     end_line: x.line,
@@ -26,7 +26,7 @@ export async function createAnnotations({
         )
         const { data } = await octokit.checks.create({
             ...github.context.repo,
-            name: github.context.action,
+            name: 'bump-version',
             head_sha: getSha(github.context),
             conclusion: 'success',
             output: {
