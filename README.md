@@ -35,6 +35,8 @@ Useful if you have many versions to bump.
 
 ## Created annotations
 
+The action also creates annotations on the code and on the actions page
+
 ![](https://raw.githubusercontent.com/remorses/bump-version/js/.github/1.png)
 
 ![](https://raw.githubusercontent.com/remorses/bump-version/js/.github/2.png)
