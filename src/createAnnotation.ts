@@ -1,7 +1,7 @@
-import core from '@actions/core'
-import github from '@actions/github'
+import * as core from '@actions/core'
+import * as github from '@actions/github'
 import { ChecksCreateParamsOutputAnnotations } from '@octokit/rest'
-import fs from 'fs'
+import * as fs from 'fs'
 import { LineReplaced } from './support'
 
 export async function createAnnotations({

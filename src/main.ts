@@ -51,6 +51,7 @@ async function run() {
     await createAnnotations({ githubToken, newVersion: tagMsg, linesReplaced })
     core.setOutput('version', newVersion)
     core.setOutput('prefix', prefix)
+    core.info(`new version ${tagMsg}`)
 }
 
 try {
