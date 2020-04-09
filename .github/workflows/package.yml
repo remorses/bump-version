@@ -16,7 +16,7 @@ jobs:
                   registry-url: https://registry.npmjs.org/
             # - run: npm ci
             - name: Bump version
-              uses: remorses/bump-version@js
+              uses: ./
               with:
                   version_file: VERSION
               env:
