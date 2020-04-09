@@ -39,6 +39,7 @@ export default async ({
         // await exec('git', ['branch', '--verbose'], options)
 
         await exec('git', ['add', '-A'], options)
+        await exec('git', ['checkout', branch], options)
 
         try {
             await exec('git', ['commit', '-v', '-m', `${MESSAGE}`], options)
@@ -46,7 +47,6 @@ export default async ({
             core.debug('nothing to commit')
             return
         }
-        // await exec('git', ['checkout', branch], options)
         
         await push({ branch, options })
     } catch (err) {
