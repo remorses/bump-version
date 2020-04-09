@@ -30,6 +30,6 @@ runs:
   main: 'lib/main.js'
 
 # [bump]
-# 2.0.30
+# 2.0.32
 
 
