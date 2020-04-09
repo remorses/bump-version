@@ -13,31 +13,6 @@ export default async ({
     branch,
 }) => {
     try {
-        if (!process.env.GITHUB_WORKSPACE || !process.env.GITHUB_REPOSITORY) {
-            console.log('using the local execution')
-            const options: ExecOptions = {
-                // cwd: '.',
-                errStream: process.stderr,
-                outStream: process.stdout,
-            }
-            await exec('git', ['fetch', '--tags'], options)
-            await exec('git', ['add', '.'], options)
-            try {
-                await exec('git', ['commit', '-m', `${MESSAGE}`], options)
-            } catch (err) {
-                console.log('nothing to commit, working tree clean')
-                return
-            }
-            try {
-                await exec('git', ['tag', tagName, '-m', tagMsg], options)
-                // await exec('git', ['push', 'origin', 'HEAD'], options)
-                // await exec('git', ['push', 'origin', '--tags'], options)
-            } catch (e) {
-                console.log('got error while tagging and pushing: ' + e)
-                return
-            }
-            return
-        }
 
         if (!process.env.GITHUB_TOKEN) {
             console.log('missing required env vars, skipping commit creation')
@@ -60,20 +35,19 @@ export default async ({
         await exec('git', ['config', 'user.email', `"${USER_EMAIL}"`], options)
 
         await exec('git', ['remote', 'add', 'publisher', REMOTE_REPO], options)
-        await exec('git', ['show-ref'], options)
-        await exec('git', ['branch', '--verbose'], options)
+        // await exec('git', ['show-ref'], options)
+        // await exec('git', ['branch', '--verbose'], options)
 
         await exec('git', ['add', '-A'], options)
 
         try {
-            await exec('git', ['commit', '-m', `${MESSAGE}`], options)
+            await exec('git', ['commit', '-v', '-m', `${MESSAGE}`], options)
         } catch (err) {
-            core.debug('nothing to commit, working tree clean')
+            core.debug('nothing to commit')
             return
         }
-        await exec('git', ['branch', 'bump_tmp_'], options)
-        await exec('git', ['checkout', branch], options)
-        await exec('git', ['merge', 'bump_tmp_'], options)
+        // await exec('git', ['checkout', branch], options)
+        
         await push({ branch, options })
     } catch (err) {
         core.setFailed(err.message)
