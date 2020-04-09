@@ -15,7 +15,6 @@ This actions does 3 things:
   with:
       version_file: ./VERSION
       github_token: ${{ secrets.GITHUB_TOKEN }}
-      branch: master
 ```
 
 ## Usage in a monorepo:
