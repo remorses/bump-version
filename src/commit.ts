@@ -1,15 +1,24 @@
-import { exec }from '@actions/exec'
+import { exec } from '@actions/exec'
 import * as core from '@actions/core'
 import { ExecOptions } from '@actions/exec/lib/interfaces'
+import { retry } from './support'
 
-export default async ({ USER_NAME, USER_EMAIL, MESSAGE, GITHUB_TOKEN, tagName, tagMsg, branch }) => {
+export default async ({
+    USER_NAME,
+    USER_EMAIL,
+    MESSAGE,
+    GITHUB_TOKEN,
+    tagName,
+    tagMsg,
+    branch,
+}) => {
     try {
         if (!process.env.GITHUB_WORKSPACE || !process.env.GITHUB_REPOSITORY) {
             console.log('using the local execution')
             const options: ExecOptions = {
                 // cwd: '.',
                 errStream: process.stderr,
-                outStream: process.stdout
+                outStream: process.stdout,
             }
             await exec('git', ['fetch', '--tags'], options)
             await exec('git', ['add', '.'], options)
@@ -23,7 +32,7 @@ export default async ({ USER_NAME, USER_EMAIL, MESSAGE, GITHUB_TOKEN, tagName, t
                 await exec('git', ['tag', tagName, '-m', tagMsg], options)
                 // await exec('git', ['push', 'origin', 'HEAD'], options)
                 // await exec('git', ['push', 'origin', '--tags'], options)
-            } catch(e) {
+            } catch (e) {
                 console.log('got error while tagging and pushing: ' + e)
                 return
             }
@@ -43,7 +52,7 @@ export default async ({ USER_NAME, USER_EMAIL, MESSAGE, GITHUB_TOKEN, tagName, t
             listeners: {
                 stdline: core.debug,
                 stderr: core.debug,
-                debug: core.debug ,
+                debug: core.debug,
             },
         } as any
 
@@ -62,12 +71,39 @@ export default async ({ USER_NAME, USER_EMAIL, MESSAGE, GITHUB_TOKEN, tagName, t
             core.debug('nothing to commit, working tree clean')
             return
         }
-        await exec('git', ['branch', 'tmp'], options)
+        await exec('git', ['branch', 'bump_tmp_'], options)
         await exec('git', ['checkout', branch], options)
-        await exec('git', ['merge', 'tmp'], options)
-        await exec('git', ['push', 'publisher', branch], options)
+        await exec('git', ['merge', 'bump_tmp_'], options)
+        await push({ branch, options })
     } catch (err) {
         core.setFailed(err.message)
         console.log(err)
+        process.exit(1)
     }
+}
+
+async function push({ branch, options }) {
+    async function fn(bail) {
+        await exec(
+            'git',
+            [
+                'pull',
+                '--no-edit',
+                '--commit',
+                '--strategy-option',
+                'theirs',
+                'publisher',
+                branch,
+            ],
+            options,
+        )
+        await exec('git', ['push', 'publisher', branch], options)
+    }
+    await retry(fn, {
+        randomize: true,
+        onRetry: (e, i) => {
+            console.error(`retrying pushing the ${i} time after error: ${e}`)
+        },
+        retries: 3,
+    })
 }

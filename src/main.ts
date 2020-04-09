@@ -11,13 +11,15 @@ async function run() {
     console.log('running')
     const githubToken =
         core.getInput('github_token') || process.env.GITHUB_TOKEN
-    const branch = core.getInput('branch') || process.env.BRANCH || 'master' // TODO get current branch from actions
+    const GITHUB_REF = process.env.GITHUB_REF || ''
+    const branch =
+        core.getInput('branch') ||
+        process.env.BRANCH ||
+        GITHUB_REF.split('/').reverse()[0] ||
+        'master'
     const versionPath = core.getInput('version_file') || 'VERSION'
     const prefix = (core.getInput('prefix') || '').trim()
-    const version = fs
-        .readFileSync(versionPath, 'utf8')
-        .toString()
-        .trim()
+    const version = fs.readFileSync(versionPath, 'utf8').toString().trim()
     const newVersion = bump(version)
     console.log('wrinting new version file')
     fs.writeFileSync(versionPath, newVersion, 'utf8')
@@ -61,3 +63,5 @@ try {
 } catch (e) {
     console.error(e)
 }
+
+
