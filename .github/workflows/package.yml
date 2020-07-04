@@ -4,6 +4,7 @@ on:
     push:
         branches:
             - js
+            - prerelease
 
 jobs:
     build:
@@ -19,6 +20,7 @@ jobs:
               uses: ./
               with:
                   version_file: VERSION
+                  prerelease_tag: alpha
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             # - run: npm publish

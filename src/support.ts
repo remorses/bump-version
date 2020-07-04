@@ -53,12 +53,6 @@ export const replacePattern = async (
     //
 }
 
-export function bump(version: string): string {
-    return version.replace(/^([\d\.]+)([\-|\.])(\d+)$/, function () {
-        return arguments[1] + arguments[2] + (Number(arguments[3]) + 1)
-    })
-}
-
 export const capitalize = (prefix) => {
     return prefix.charAt(0).toUpperCase() + prefix.slice(1)
 }

@@ -2,13 +2,14 @@ import * as core from '@actions/core'
 import * as fs from 'fs'
 import commit from './commit'
 import { createTag } from './createTag'
-import { bump, capitalize, replacePattern, LineReplaced } from './support'
+import { capitalize, replacePattern, LineReplaced } from './support'
+import { inc } from 'semver'
+
 import { createAnnotations } from './createAnnotation'
 
 const versionRegex = /[0-9]+\.[0-9]+\.[0-9]+/
 
 async function run() {
-    console.log('running')
     const githubToken =
         core.getInput('github_token') || process.env.GITHUB_TOKEN
     const GITHUB_REF = process.env.GITHUB_REF || ''
@@ -20,8 +21,16 @@ async function run() {
     const versionPath = core.getInput('version_file') || 'VERSION'
     const prefix = (core.getInput('prefix') || '').trim()
     const version = fs.readFileSync(versionPath, 'utf8').toString().trim()
-    const newVersion = bump(version)
-    console.log('wrinting new version file')
+    const preReleaseTag = core.getInput('prerelease_tag') || ''
+    const newVersion = inc(
+        version,
+        preReleaseTag ? 'prepatch' : 'patch',
+        preReleaseTag ?? undefined,
+    )
+    if (!newVersion) {
+        throw new Error('could not bump version ' + version)
+    }
+    console.log('writing new version file')
     fs.writeFileSync(versionPath, newVersion, 'utf8')
     let linesReplaced: LineReplaced[] = []
     if (prefix) {
@@ -63,6 +72,3 @@ try {
 } catch (e) {
     console.error(e)
 }
-
-
-
