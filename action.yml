@@ -33,6 +33,6 @@ runs:
   main: 'lib/main.js'
 
 # [bump]
-# 2.0.35-alpha.1-alpha.0-alpha.0 // TODO regex match the rag
+# 2.0.35-alpha.1 // TODO regex match the rag
 
 

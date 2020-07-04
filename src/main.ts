@@ -7,7 +7,7 @@ import { inc } from 'semver'
 
 import { createAnnotations } from './createAnnotation'
 
-const versionRegex = /[0-9]+\.[0-9]+\.[0-9]+/
+const versionRegex = /[0-9]+\.[0-9]+\.[0-9]+(?:-[\w\d\.]+)?/
 
 async function run() {
     const githubToken =
