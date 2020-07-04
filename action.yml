@@ -16,6 +16,9 @@ inputs:
   github_token:
     description: 'the github token to push changes'
     required: false
+  prerelease_tag:
+    description: 'The prerelease tag, for example alpha will give you the version `0.0.1-alpha.0`'
+    required: false
   branch:
     description: 'The branch to bump version in'
     required: false
@@ -30,6 +33,6 @@ runs:
   main: 'lib/main.js'
 
 # [bump]
-# 2.0.34
+# 2.0.34-alpha.0
 
 
