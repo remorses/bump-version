@@ -32,6 +32,24 @@ Useful if you have many versions to bump.
 # will create the tag {prefix}_{version}
 ```
 
+## Using a prerelease tag
+
+You can add a prerelease tag to a version using the `prerelease_tag` input
+
+For example if you have `1.0.0` in `./VERSION`, the workflow below will commit the new version `1.0.1-alpha.0`
+
+After the first prerelease `bump-version` will increase the tag version: `1.0.1-alpha.0` wil become `1.0.1-alpha.1`
+
+```yaml
+- name: Bump versions
+  uses: remorses/bump-version@js
+  with:
+      version_file: ./VERSION
+      prerelease_tag: alpha
+      github_token: ${{ secrets.GITHUB_TOKEN }}
+```
+
+
 ## Created annotations
 
 The action also creates annotations on the code and on the actions page
