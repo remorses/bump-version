@@ -24,7 +24,7 @@ async function run() {
     const preReleaseTag = core.getInput('prerelease_tag') || ''
     const newVersion = inc(
         version,
-        preReleaseTag ? 'prepatch' : 'patch',
+        preReleaseTag ? 'prerelease' : 'patch',
         preReleaseTag ?? undefined,
     )
     if (!newVersion) {
