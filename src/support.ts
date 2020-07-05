@@ -3,6 +3,8 @@ import retrier from 'retry'
 import * as path from 'path'
 import globby from 'globby'
 
+export const versionRegex = /[0-9]+\.[0-9]+\.[0-9]+(?:-[\w\d\.-]+)?/
+
 export interface LineReplaced {
     line: number
     path: string

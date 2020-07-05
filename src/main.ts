@@ -2,12 +2,10 @@ import * as core from '@actions/core'
 import * as fs from 'fs'
 import commit from './commit'
 import { createTag } from './createTag'
-import { capitalize, replacePattern, LineReplaced } from './support'
+import { capitalize, replacePattern, LineReplaced, versionRegex } from './support'
 import { inc } from 'semver'
 
 import { createAnnotations } from './createAnnotation'
-
-const versionRegex = /[0-9]+\.[0-9]+\.[0-9]+(?:-[\w\d\.-]+)?/
 
 async function run() {
     const githubToken =
