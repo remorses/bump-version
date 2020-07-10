@@ -22,6 +22,7 @@ export const replacePattern = async (p: {
         gitignore: true,
         expandDirectories: true,
         onlyFiles: true,
+        concurrency: 10,
         ignore: ['node_modules', ...ignore],
     })
     console.log('scanned files')
