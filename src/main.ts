@@ -2,7 +2,12 @@ import * as core from '@actions/core'
 import * as fs from 'fs'
 import commit from './commit'
 import { createTag } from './createTag'
-import { capitalize, replacePattern, LineReplaced, versionRegex } from './support'
+import {
+    capitalize,
+    replacePattern,
+    LineReplaced,
+    versionRegex,
+} from './support'
 import { inc } from 'semver'
 
 import { createAnnotations } from './createAnnotation'
@@ -10,6 +15,12 @@ import { createAnnotations } from './createAnnotation'
 async function run() {
     const githubToken =
         core.getInput('github_token') || process.env.GITHUB_TOKEN
+    const ignore =
+        core
+            .getInput('ignore')
+            .split(',')
+            .map((x) => x.trim())
+            .filter(Boolean) || []
     const GITHUB_REF = process.env.GITHUB_REF || ''
     const branch =
         core.getInput('branch') ||
@@ -34,11 +45,21 @@ async function run() {
     if (prefix) {
         console.log(`replacing version patterns below [bump if ${prefix}]`)
         const pattern = new RegExp('\\[bump if ' + prefix + '\\]')
-        const res = await replacePattern(pattern, versionRegex, newVersion)
+        const res = await replacePattern({
+            pattern,
+            replacer: versionRegex,
+            value: newVersion,
+            ignore,
+        })
         linesReplaced = res.linesReplaced
     } else {
         console.log(`replacing version patterns below [bump]`)
-        const res = await replacePattern(/\[bump\]/, versionRegex, newVersion)
+        const res = await replacePattern({
+            pattern: /\[bump\]/,
+            replacer: versionRegex,
+            value: newVersion,
+            ignore,
+        })
         linesReplaced = res.linesReplaced
     }
     const tagName = prefix ? prefix + '_' + newVersion : newVersion

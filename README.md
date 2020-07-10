@@ -1,9 +1,10 @@
 # Bump version
 
 This actions does 3 things:
-- Bumps the version number in the provided `version_file`.
-- Creates a tag for the new version (prefixed with the `prefix` input if provided).
-- Bumps all the versions under lines with the pattern `[bump]` (or `[bump if prefix]` if a prefix is provided).
+
+-   Bumps the version number in the provided `version_file`.
+-   Creates a tag for the new version (prefixed with the `prefix` input if provided).
+-   Bumps all the versions under lines with the pattern `[bump]` (or `[bump if prefix]` if a prefix is provided).
 
 **Please use the `js` branch as it is the one up to date.**
 
@@ -47,8 +48,8 @@ After the first prerelease `bump-version` will increase the tag version: `1.0.1-
       version_file: ./VERSION
       prerelease_tag: alpha
       github_token: ${{ secrets.GITHUB_TOKEN }}
+      ignore: dist, ignored_folder
 ```
-
 
 ## Created annotations
 

@@ -11,16 +11,18 @@ export interface LineReplaced {
     newValue: string
 }
 
-export const replacePattern = async (
-    pattern: RegExp,
-    replacer: RegExp,
-    value: string,
-) => {
+export const replacePattern = async (p: {
+    pattern: RegExp
+    replacer: RegExp
+    value: string
+    ignore?: string[]
+}) => {
+    const { pattern, replacer, value, ignore = [] } = p
     const files = await globby('**', {
         gitignore: true,
         expandDirectories: true,
         onlyFiles: true,
-        ignore: ['node_modules'],
+        ignore: ['node_modules', ...ignore],
     })
     console.log('scanned files')
     const linesReplaced: LineReplaced[] = []
