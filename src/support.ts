@@ -18,21 +18,12 @@ export const replacePattern = async (p: {
     ignore?: string[]
 }) => {
     const { pattern, replacer, value, ignore = [] } = p
-    const ignored = ignore.map(
-        (line) => '!' + line.trim().replace(/^\/+|\/+$/g, ''),
-    )
-    const globs = [
-        `**`,
-        `!.git`,
-        `!node_modules`,
-        ...ignored,
-        ...getGlobsFromGit(),
-    ]
-    const files = await globby(globs, {
+    const files = await globby('**', {
+        gitignore: true,
         expandDirectories: true,
         onlyFiles: true,
-        followSymbolicLinks: false,
-        // ignore: ['node_modules', ...ignore],
+        concurrency: 10,
+        ignore: ['node_modules', ...ignore],
     })
     console.log('scanned files')
     const linesReplaced: LineReplaced[] = []
@@ -130,16 +121,4 @@ export function retry(fn, opts = defaultOpts) {
     }
 
     return new Promise(run)
-}
-
-const getGlobsFromGit = () => {
-    try {
-        return fs
-            .readFileSync('.gitignore', { encoding: 'utf8' })
-            .split('\n')
-            .filter((line) => !/^\s*$/.test(line) && !/^\s*#/.test(line))
-            .map((line) => '!' + line.trim().replace(/^\/+|\/+$/g, ''))
-    } catch {
-        return []
-    }
 }
