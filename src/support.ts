@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 import retrier from 'retry'
 import * as path from 'path'
-import globby from 'globby'
+import { glob } from 'smart-glob'
 
 export const versionRegex = /[0-9]+\.[0-9]+\.[0-9]+(?:-[\w\d\.-]+)?/
 
@@ -18,11 +18,10 @@ export const replacePattern = async (p: {
     ignore?: string[]
 }) => {
     const { pattern, replacer, value, ignore = [] } = p
-    const files = await globby('**', {
+    const files = await glob('**', {
         gitignore: true,
-        expandDirectories: true,
-        onlyFiles: true,
-        concurrency: 10,
+        // expandDirectories: true,
+        filesOnly: true,
         ignore: ['node_modules', ...ignore],
     })
     console.log('scanned files')
