@@ -17,14 +17,14 @@ You can find this benchmark in the `/tests` folder
 ```
 benchmarks
 
-tiny-glob: 168.075ms
-    ✓ tiny-glob (169ms)
-fast-glob: 6.027ms
+tiny-glob: 157.726ms
+    ✓ tiny-glob (158ms)
+fast-glob: 8.392ms
     ✓ fast-glob
-globby: 4.359ms
+globby: 7.855ms
     ✓ globby
-glob: 397.735ms
-    ✓ glob (398ms)
-smart-blog: 3.981ms
+glob: 391.656ms
+    ✓ glob (392ms)
+smart-blog: 3.261ms
     ✓ smart-blog
 ```
