@@ -28,7 +28,7 @@ async function run() {
         GITHUB_REF.split('/').reverse()[0] ||
         'master'
     const versionPath = core.getInput('version_file') || 'VERSION'
-    if (fs.existsSync(versionPath)) {
+    if (!fs.existsSync(versionPath)) {
         fs.writeFileSync(versionPath, '0.0.0', 'utf8')
     }
     const prefix = (core.getInput('prefix') || '').trim()
