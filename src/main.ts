@@ -28,6 +28,9 @@ async function run() {
         GITHUB_REF.split('/').reverse()[0] ||
         'master'
     const versionPath = core.getInput('version_file') || 'VERSION'
+    if (fs.existsSync(versionPath)) {
+        fs.writeFileSync(versionPath, '0.0.0', 'utf8')
+    }
     const prefix = (core.getInput('prefix') || '').trim()
     const version = fs.readFileSync(versionPath, 'utf8').toString().trim()
     const preReleaseTag = core.getInput('prerelease_tag') || ''
