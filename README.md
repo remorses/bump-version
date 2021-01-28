@@ -35,7 +35,7 @@ Useful if you have many versions to bump.
 
 ## ~~Using a prerelease tag~~
 
-> This does not work with npm because you need to pass the `--tag` directly in the pnm publish command
+> This does not work with npm because you need to pass the `--tag` directly in the npm publish command
 
 You can add a prerelease tag to a version using the `prerelease_tag` input
 
