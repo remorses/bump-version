@@ -36,5 +36,5 @@ runs:
   using: "node12"
   main: "lib/main.js"
 # [bump]
-# 2.0.49 // TODO regex match the rag
+# 0.0.1 // TODO regex match the rag
 
