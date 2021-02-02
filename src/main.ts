@@ -69,8 +69,8 @@ async function run() {
     const tagMsg = `${capitalize(prefix) + ' '}Version ${newVersion} [skip ci]`
     await Promise.all([
         commit({
-            USER_EMAIL: 'bump@version.com',
-            USER_NAME: 'bump-version',
+            USER_EMAIL: 'bump-version@version.com',
+            USER_NAME: 'bump_version',
             GITHUB_TOKEN: githubToken,
             MESSAGE: tagMsg,
             tagName,
