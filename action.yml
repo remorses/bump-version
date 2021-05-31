@@ -40,5 +40,5 @@ runs:
   using: "node12"
   main: "lib/main.js"
 # [bump]
-# 2.0.53 // TODO regex match the rag
+# 2.0.55 // TODO regex match the rag
 
