@@ -21,7 +21,6 @@ jobs:
               uses: ./
               with:
                   version_file: VERSION
-                  explicit: 1
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             # - run: npm publish
