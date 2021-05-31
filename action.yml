@@ -27,6 +27,10 @@ inputs:
     description: "Filenames to ignore, separated by commas"
     required: false
     default: ""
+  explicit:
+    description: "Only changes specified version_file. Overrides ignore. Set to '1'"
+    required: false
+    default: ""
 outputs:
   version:
     description: New version
