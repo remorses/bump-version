@@ -1,7 +1,7 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 
-export async function createTag({ tagName, tagMsg = '' }) {
+export async function createTag({ tagName, tagMsg = '', gitSha }) {
     if (!process.env.GITHUB_WORKSPACE || !process.env.GITHUB_REPOSITORY) {
         console.log(
             'not in Github Action, skipping tag creation with github api'
@@ -37,7 +37,7 @@ export async function createTag({ tagName, tagMsg = '' }) {
         repo,
         tag: tagName,
         message: tagMsg,
-        object: process.env.GITHUB_SHA as string,
+        object: gitSha,
         type: 'commit',
     })
 

@@ -3,6 +3,8 @@ import * as core from '@actions/core'
 import { ExecOptions } from '@actions/exec/lib/interfaces'
 import { retry } from './support'
 
+let curExecStdOut = '' as string;
+
 export default async ({
     USER_NAME,
     USER_EMAIL,
@@ -25,6 +27,9 @@ export default async ({
         const options = {
             cwd: process.env.GITHUB_WORKSPACE,
             listeners: {
+                stdout: (data: Buffer) => {
+                    curExecStdOut = data.toString();
+                },
                 stdline: core.debug,
                 stderr: core.debug,
                 debug: core.debug,
@@ -50,6 +55,8 @@ export default async ({
         await exec('git', ['checkout', branch], options)
         await exec('git', ['merge', 'bump_tmp_'], options)
         await push({ branch, options })
+        await exec('git', ['rev-parse', 'HEAD'], options);
+        return curExecStdOut.trim() as string
     } catch (err) {
         core.setFailed(err.message)
         console.log(err)

@@ -27,6 +27,10 @@ inputs:
     description: "Filenames to ignore, separated by commas"
     required: false
     default: ""
+  tag_version_bump_commit:
+    description: "Set to 'true' to create tag on the version bump commit instead"
+    required: false
+    default: 'false'
 outputs:
   version:
     description: New version
@@ -37,4 +41,3 @@ runs:
   main: "lib/main.js"
 # [bump]
 # 2.0.53 // TODO regex match the rag
-
