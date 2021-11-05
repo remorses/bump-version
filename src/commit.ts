@@ -50,7 +50,7 @@ export default async ({
         await exec('git', ['checkout', branch], options)
         await exec('git', ['merge', 'bump_tmp_'], options)
         await push({ branch, options })
-    } catch (err) {
+    } catch (err: any) {
         core.setFailed(err.message)
         console.log(err)
         process.exit(1)
