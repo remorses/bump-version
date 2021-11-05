@@ -67,21 +67,20 @@ async function run() {
     }
     const tagName = prefix ? prefix + '_' + newVersion : newVersion
     const tagMsg = `${capitalize(prefix) + ' '}Version ${newVersion} [skip ci]`
-    await Promise.all([
-        commit({
-            USER_EMAIL: 'bump-version@version.com',
-            USER_NAME: 'bump_version',
-            GITHUB_TOKEN: githubToken,
-            MESSAGE: tagMsg,
-            tagName,
-            tagMsg,
-            branch,
-        }),
-        createTag({
-            tagName,
-            tagMsg,
-        }),
-    ])
+
+    await commit({
+        USER_EMAIL: 'bump-version@version.com',
+        USER_NAME: 'bump_version',
+        GITHUB_TOKEN: githubToken,
+        MESSAGE: tagMsg,
+        tagName,
+        tagMsg,
+        branch,
+    })
+    await createTag({
+        tagName,
+        tagMsg,
+    })
     console.log('setting output version=' + newVersion + ' prefix=' + prefix)
     await createAnnotations({ githubToken, newVersion: tagMsg, linesReplaced })
     core.setOutput('version', newVersion)
