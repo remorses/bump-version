@@ -15,7 +15,8 @@ This actions does 3 things:
   uses: remorses/bump-version@js
   with:
       version_file: ./VERSION
-      github_token: ${{ secrets.GITHUB_TOKEN }}
+  env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ## Usage in a monorepo:
@@ -29,7 +30,8 @@ Useful if you have many versions to bump.
   with:
       version_file: ./dir2/VERSION
       prefix: dir2 # this will prefix the created tag
-      github_token: ${{ secrets.GITHUB_TOKEN }}
+  env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 # will create the tag {prefix}_{version}
 ```
 
@@ -49,8 +51,9 @@ After the first prerelease `bump-version` will increase the tag version: `1.0.1-
   with:
       version_file: ./VERSION
       prerelease_tag: alpha
-      github_token: ${{ secrets.GITHUB_TOKEN }}
       ignore: dist, ignored_folder
+  env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ## Created annotations
