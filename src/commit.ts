@@ -13,7 +13,6 @@ export default async ({
     branch,
 }) => {
     try {
-
         if (!process.env.GITHUB_TOKEN) {
             console.log('missing required env vars, skipping commit creation')
             core.setFailed('missing required env vars')
@@ -63,6 +62,7 @@ async function push({ branch, options }) {
             'git',
             [
                 'pull',
+                '--ff-only',
                 '--no-edit',
                 '--commit',
                 '--strategy-option',
