@@ -58,6 +58,7 @@ export default async ({
 
 async function push({ branch, options }) {
     async function fn(bail) {
+        await exec('git', 'config pull.rebase false'.split(' '), options)
         await exec(
             'git',
             [
