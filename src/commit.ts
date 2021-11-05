@@ -62,7 +62,6 @@ async function push({ branch, options }) {
             'git',
             [
                 'pull',
-                '--ff-only',
                 '--no-edit',
                 '--commit',
                 '--strategy-option',
