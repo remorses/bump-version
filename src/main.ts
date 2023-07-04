@@ -26,7 +26,7 @@ async function run() {
         core.getInput('branch') ||
         process.env.BRANCH ||
         GITHUB_REF.split('/').reverse()[0] ||
-        'master'
+        'develop'
     const versionPath = core.getInput('version_file') || 'VERSION'
     if (!fs.existsSync(versionPath)) {
         fs.writeFileSync(versionPath, '0.0.0', 'utf8')
@@ -34,39 +34,45 @@ async function run() {
     const prefix = (core.getInput('prefix') || '').trim()
     const version = fs.readFileSync(versionPath, 'utf8').toString().trim()
     const preReleaseTag = core.getInput('prerelease_tag') || ''
-    const newVersion = inc(
-        version,
-        preReleaseTag ? 'prerelease' : 'patch',
-        preReleaseTag ?? undefined,
-    )
+    const split = version.split('=')
+    split[1] = core.getInput('buildNumber')
+    const newVersion = split[0] + '=' + split[1]
+    // inc(
+    //     version,
+    //     preReleaseTag ? 'prerelease' : 'patch',
+    //     preReleaseTag ?? undefined,
+    // )
     if (!newVersion) {
         throw new Error('could not bump version ' + version)
     }
     console.log('writing new version file')
+    console.log('writing new version file file')
+    console.log('older version ' + version)
+    console.log('older new version ' + newVersion)
     fs.writeFileSync(versionPath, newVersion, 'utf8')
-    let linesReplaced: LineReplaced[] = []
-    if (prefix) {
-        console.log(`replacing version patterns below [bump if ${prefix}]`)
-        const pattern = new RegExp('\\[bump if ' + prefix + '\\]')
-        const res = await replacePattern({
-            pattern,
-            replacer: versionRegex,
-            value: newVersion,
-            ignore,
-        })
-        linesReplaced = res.linesReplaced
-    } else {
-        console.log(`replacing version patterns below [bump]`)
-        const res = await replacePattern({
-            pattern: /\[bump\]/,
-            replacer: versionRegex,
-            value: newVersion,
-            ignore,
-        })
-        linesReplaced = res.linesReplaced
-    }
-    const tagName = prefix ? prefix + '_' + newVersion : newVersion
-    const tagMsg = `${capitalize(prefix) + ' '}Version ${newVersion} [skip ci]`
+    // let linesReplaced: LineReplaced[] = []
+    // if (prefix) {
+    //     console.log(`replacing version patterns below [bump if ${prefix}]`)
+    //     const pattern = new RegExp('\\[bump if ' + prefix + '\\]')
+    //     const res = await replacePattern({
+    //         pattern,
+    //         replacer: versionRegex,
+    //         value: newVersion,
+    //         ignore,
+    //     })
+    //     linesReplaced = res.linesReplaced
+    // } else {
+    //     console.log(`replacing version patterns below [bump]`)
+    //     const res = await replacePattern({
+    //         pattern: /\[bump\]/,
+    //         replacer: versionRegex,
+    //         value: newVersion,
+    //         ignore,
+    //     })
+    //     linesReplaced = res.linesReplaced
+    // }
+    const tagName = "tage name"//prefix ? prefix + '_' + newVersion : newVersion
+    const tagMsg = "tag message"//${capitalize(prefix) + ' '}Version ${newVersion} [skip ci]`
 
     await commit({
         USER_EMAIL: 'bump-version@version.com',
@@ -82,7 +88,7 @@ async function run() {
         tagMsg,
     })
     console.log('setting output version=' + newVersion + ' prefix=' + prefix)
-    await createAnnotations({ githubToken, newVersion: tagMsg, linesReplaced })
+    // await createAnnotations({ githubToken, newVersion: tagMsg, linesReplaced })
     core.setOutput('version', newVersion)
     core.setOutput('prefix', prefix)
     core.info(`new version ${tagMsg}`)

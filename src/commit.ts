@@ -19,6 +19,7 @@ export default async ({
             return
         }
         console.log(`committing changes with message "${MESSAGE}"`)
+        console.log(`https://${process.env.GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`)
         const REMOTE_REPO = `https://${process.env.GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`
 
         const options = {
