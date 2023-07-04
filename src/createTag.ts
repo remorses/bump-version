@@ -1,5 +1,6 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
+import Octokit from '@octokit/rest';
 
 export async function createTag({ tagName, tagMsg = '' }) {
     if (!process.env.GITHUB_WORKSPACE || !process.env.GITHUB_REPOSITORY) {
@@ -19,18 +20,34 @@ export async function createTag({ tagName, tagMsg = '' }) {
     const owner = process.env.GITHUB_ACTOR as string
     const repo = process.env.GITHUB_REPOSITORY?.split('/').pop() as string
 
-    const tags = await git.repos.listTags({
-        owner,
-        repo,
-        per_page: 100,
-    })
+    console.log(owner)
+    console.log(repo)
+    console.log(process.env.GITHUB_TOKEN)
 
-    for (let tag of tags.data) {
-        if (tag.name.trim().toLowerCase() === tagName.trim().toLowerCase()) {
-            core.debug(`"${tag.name.trim()}" tag already exists.`)
-            return
+    // const tags = await git.repos.listTags({
+    //     owner,
+    //     repo,
+    //     per_page: 100,
+    // })
+
+    const octokit = new Octokit({
+        auth: process.env.GITHUB_TOKEN
+      })
+
+    await octokit.request('GET /repos/' + owner + '/' + repo + '/tags', {
+        owner: 'OWNER',
+        repo: 'REPO',
+        headers: {
+          'X-GitHub-Api-Version': '2022-11-28'
         }
-    }
+      })
+
+    // for (let tag of tags.data) {
+    //     if (tag.name.trim().toLowerCase() === tagName.trim().toLowerCase()) {
+    //         core.debug(`"${tag.name.trim()}" tag already exists.`)
+    //         return
+    //     }
+    // }
 
     const newTag = await git.git.createTag({
         owner,

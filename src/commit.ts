@@ -46,10 +46,11 @@ export default async ({
             core.debug('nothing to commit')
             return
         }
-        await exec('git', ['branch', 'bump_tmp_'], options)
-        await exec('git', ['checkout', branch], options)
-        await exec('git', ['merge', 'bump_tmp_'], options)
-        await push({ branch, options })
+        await exec('git', ['push', 'origin', 'chore/version-bump'])
+        // await exec('git', ['branch', 'bump_tmp_'], options)
+        // await exec('git', ['checkout', branch], options)
+        // await exec('git', ['merge', 'bump_tmp_'], options)
+        // await push({ branch, options })
     } catch (err: any) {
         core.setFailed(err.message)
         console.log(err)

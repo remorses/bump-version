@@ -27,7 +27,9 @@ async function run() {
         process.env.BRANCH ||
         GITHUB_REF.split('/').reverse()[0] ||
         'develop'
+    // const version_file = './versions.properties'
     const versionPath = core.getInput('version_file') || 'VERSION'
+    console.log(versionPath)
     if (!fs.existsSync(versionPath)) {
         fs.writeFileSync(versionPath, '0.0.0', 'utf8')
     }
@@ -35,7 +37,7 @@ async function run() {
     const version = fs.readFileSync(versionPath, 'utf8').toString().trim()
     const preReleaseTag = core.getInput('prerelease_tag') || ''
     const split = version.split('=')
-    split[1] = core.getInput('buildNumber')
+    split[1] = core.getInput('version_number')
     const newVersion = split[0] + '=' + split[1]
     // inc(
     //     version,
@@ -45,6 +47,16 @@ async function run() {
     if (!newVersion) {
         throw new Error('could not bump version ' + version)
     }
+    console.log('listing files in ' + process.cwd())
+    fs.readdirSync(process.cwd()).forEach(file => {
+        console.log(file);
+    })
+    console.log('listing files in /home/runner/work/oneapp-android')
+    fs.readdirSync('/home/runner/work/oneapp-android').forEach(file => {
+        console.log(file);
+    })
+      
+    console.log(process.cwd())
     console.log('writing new version file')
     console.log('older version ' + version)
     console.log('older new version ' + newVersion)
@@ -82,10 +94,10 @@ async function run() {
         tagMsg,
         branch,
     })
-    await createTag({
-        tagName,
-        tagMsg,
-    })
+    // await createTag({
+    //     tagName,
+    //     tagMsg,
+    // })
     console.log('setting output version=' + newVersion + ' prefix=' + prefix)
     // await createAnnotations({ githubToken, newVersion: tagMsg, linesReplaced })
     core.setOutput('version', newVersion)
