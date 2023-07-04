@@ -46,7 +46,6 @@ async function run() {
         throw new Error('could not bump version ' + version)
     }
     console.log('writing new version file')
-    console.log('writing new version file file')
     console.log('older version ' + version)
     console.log('older new version ' + newVersion)
     fs.writeFileSync(versionPath, newVersion, 'utf8')
@@ -74,19 +73,19 @@ async function run() {
     const tagName = "tage name"//prefix ? prefix + '_' + newVersion : newVersion
     const tagMsg = "tag message"//${capitalize(prefix) + ' '}Version ${newVersion} [skip ci]`
 
-    // await commit({
-    //     USER_EMAIL: 'bump-version@version.com',
-    //     USER_NAME: 'bump_version',
-    //     GITHUB_TOKEN: githubToken,
-    //     MESSAGE: tagMsg,
-    //     tagName,
-    //     tagMsg,
-    //     branch,
-    // })
-    // await createTag({
-    //     tagName,
-    //     tagMsg,
-    // })
+    await commit({
+        USER_EMAIL: 'bump-version@version.com',
+        USER_NAME: 'bump_version',
+        GITHUB_TOKEN: githubToken,
+        MESSAGE: tagMsg,
+        tagName,
+        tagMsg,
+        branch,
+    })
+    await createTag({
+        tagName,
+        tagMsg,
+    })
     console.log('setting output version=' + newVersion + ' prefix=' + prefix)
     // await createAnnotations({ githubToken, newVersion: tagMsg, linesReplaced })
     core.setOutput('version', newVersion)
@@ -95,7 +94,6 @@ async function run() {
 }
 
 try {
-    console.log('writing new version file file')
     run()
 } catch (e) {
     console.error(e)
