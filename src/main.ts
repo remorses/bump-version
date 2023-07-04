@@ -95,6 +95,7 @@ async function run() {
 }
 
 try {
+    console.log('writing new version file file')
     run()
 } catch (e) {
     console.error(e)
