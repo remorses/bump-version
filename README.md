@@ -1,5 +1,7 @@
 # Bump version
 
+**No longer maintained**
+
 This actions does 3 things:
 
 -   Bumps the version number in the provided `version_file`.
