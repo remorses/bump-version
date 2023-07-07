@@ -27,6 +27,14 @@ inputs:
     description: "Filenames to ignore, separated by commas"
     required: false
     default: ""
+  skipCiMessageLocation:
+    description: |
+      Determines how to prevent another GitHub Actions run when `bump-version` creates a commit
+      for the version update. The following options are supported:
+      - `subject` (default): adds `[skip ci]` suffix to the end of the commit's subject line.
+      - `trailer`: adds a `skip-checks: true` trailer to the commit.
+    required: false
+    default: "subject"
 outputs:
   version:
     description: New version

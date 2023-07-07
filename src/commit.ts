@@ -11,6 +11,7 @@ export default async ({
     tagName,
     tagMsg,
     branch,
+    skipCiMessageLocation,
 }) => {
     try {
         if (!process.env.GITHUB_TOKEN) {
@@ -40,7 +41,8 @@ export default async ({
         await exec('git', ['add', '-A'], options)
 
         try {
-            await exec('git', ['commit', '-v', '-m', `${MESSAGE}`], options)
+            const trailerParams = skipCiMessageLocation == 'trailer' ? ['--trailer', 'skip-checks: true'] : []
+            await exec('git', ['commit', '-v', '-m', `${MESSAGE}`, ...trailerParams], options)
         } catch (err) {
             core.debug('nothing to commit')
             return

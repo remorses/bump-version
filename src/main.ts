@@ -13,6 +13,10 @@ import { inc } from 'semver'
 import { createAnnotations } from './createAnnotation'
 
 async function run() {
+    const skipCiMessageLocation = (core.getInput('skipCiMessageLocation').trim() || 'subject')
+    if (!['subject','trailer'].includes(skipCiMessageLocation)){
+        throw new Error(skipCiMessageLocation + ' is not a valid skipCiMessageLocation')
+    }
     const githubToken =
         core.getInput('github_token') || process.env.GITHUB_TOKEN
     const ignore =
@@ -66,7 +70,9 @@ async function run() {
         linesReplaced = res.linesReplaced
     }
     const tagName = prefix ? prefix + '_' + newVersion : newVersion
-    const tagMsg = `${capitalize(prefix) + ' '}Version ${newVersion} [skip ci]`
+    
+    const tagMsg = 
+        `${capitalize(prefix)} Version ${newVersion}${skipCiMessageLocation == 'trailer' ? '' : ' [skip ci]'}`
 
     await commit({
         USER_EMAIL: 'bump-version@version.com',
@@ -76,6 +82,7 @@ async function run() {
         tagName,
         tagMsg,
         branch,
+        skipCiMessageLocation,
     })
     await createTag({
         tagName,
