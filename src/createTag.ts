@@ -16,7 +16,7 @@ export async function createTag({ tagName, tagMsg = '' }) {
     console.log(`creating tag "${tagName}"`)
     // Check for existing tag
     const git = new github.GitHub(process.env.GITHUB_TOKEN)
-    const owner = process.env.GITHUB_ACTOR as string
+    const owner = process.env.GITHUB_REPOSITORY_OWNER as string
     const repo = process.env.GITHUB_REPOSITORY?.split('/').pop() as string
 
     const tags = await git.repos.listTags({
